@@ -1,3 +1,4 @@
+import Vue from "vue";
 const state = {
     products: []
 }
@@ -18,9 +19,15 @@ const actions = {
     // initApp({ commit }) {
     //     //vue resource islemleri
     // },
-    // saveProduct({ commit }, payload) {
-    //     //vue resource islemleri
-    // },
+    //{ commit },
+    saveProduct(payload) {
+        //vue resource islemleri
+        Vue.http.post("https://urun-islemleri-egitim-default-rtdb.firebaseio.com/products.json", payload)
+            .then(response => {
+                console.log(response);
+            })
+
+    },
     // sellProduct({ commit }, payload) {
     //     //vue resource islemleri
     // }

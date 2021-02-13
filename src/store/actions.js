@@ -1,7 +1,7 @@
-export const setTradeResult = ({ state }) => {
+// export const setTradeResult = ({ state }) => {
 
-}
+// }
 
-export const getTradeResult = ({ commit }) => {
+// export const getTradeResult = ({ commit }) => {
 
-}
+// }

@@ -1,3 +1,3 @@
-export const updateTradeResult = (state, payload) => {
+// export const updateTradeResult = (state, payload) => {
 
-}
+// }
