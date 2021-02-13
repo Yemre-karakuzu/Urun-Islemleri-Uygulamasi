@@ -19,12 +19,14 @@ const actions = {
     // initApp({ commit }) {
     //     //vue resource islemleri
     // },
-    //{ commit },
-    saveProduct(payload) {
+
+    saveProduct({ commit }, product) {
         //vue resource islemleri
-        Vue.http.post("https://urun-islemleri-egitim-default-rtdb.firebaseio.com/products.json", payload)
+        Vue.http.post("https://urun-islemleri-egitim-default-rtdb.firebaseio.com/products.json", product)
             .then(response => {
-                console.log(response);
+                product.key = response.body.name;
+                commit("updateProductList", product)
+
             })
 
     },
