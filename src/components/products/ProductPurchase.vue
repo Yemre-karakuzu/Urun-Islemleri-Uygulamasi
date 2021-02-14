@@ -77,7 +77,7 @@ export default {
   computed: {
     saveEnable() {
       if (
-        this.product.title > 0 &&
+        this.product.title.length > 0 &&
         this.product.count > 0 &&
         this.product.price > 0 &&
         this.product.description.length > 0
@@ -85,6 +85,22 @@ export default {
         return false;
       } else return true;
     },
+  },
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.product.title.length > 0 ||
+      this.product.count > 0 ||
+      this.product.price > 0 ||
+      this.product.description.length > 0
+    ) {
+      if (
+        confirm(
+          "Kaydedilmemiş değişiklikler var.Yine de çıkmak isstiyor musunuz?"
+        )
+      ) {
+        next();
+      } else next(false);
+    } else next();
   },
 };
 </script>
