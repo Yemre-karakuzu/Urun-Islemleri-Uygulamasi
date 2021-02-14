@@ -20,7 +20,7 @@ const mutations = {
 }
 const actions = {
     initApp({ commit }) {
-        Vue.http.get("https://urun-islemleri-egitim-default-rtdb.firebaseio.com/products.json")
+        Vue.http.get("Firebase database url koyunuz")
             .then(response => {
                 let data = response.body;
                 for (let key in data) {
@@ -32,7 +32,7 @@ const actions = {
 
     saveProduct({ commit, dispatch }, product) {
         //vue resource islemleri
-        Vue.http.post("https://urun-islemleri-egitim-default-rtdb.firebaseio.com/products.json", product)
+        Vue.http.post("Firebase database url koyunuz", product)
             .then(response => {
                 product.key = response.body.name;
                 commit("updateProductList", product)
@@ -55,7 +55,7 @@ const actions = {
 
             //Z=X-Y
             let totalCount = product[0].count - payload.count
-            Vue.http.patch("https://urun-islemleri-egitim-default-rtdb.firebaseio.com/products/" + payload.key + ".json", { count: totalCount })
+            Vue.http.patch("Firebase database url koyunuz" + payload.key + ".json", { count: totalCount })
                 .then(response => {
                     product[0].count = totalCount
                     let tradeResult = {
