@@ -17,9 +17,16 @@ const mutations = {
     }
 }
 const actions = {
-    // initApp({ commit }) {
-    //     //vue resource islemleri
-    // },
+    initApp({ commit }) {
+        Vue.http.get("https://urun-islemleri-egitim-default-rtdb.firebaseio.com/products.json")
+            .then(response => {
+                let data = response.body;
+                for (let key in data) {
+                    data[key].key = key
+                    commit("updateProductList", data[key])
+                }
+            })
+    },
 
     saveProduct({ commit, dispatch }, product) {
         //vue resource islemleri
