@@ -11,6 +11,10 @@ export const setTradeResult = ({ state, commit }, tradeResult) => {
         })
 }
 
-// export const getTradeResult = ({ commit }) => {
-
-// }
+export const getTradeResult = ({ commit }) => {
+    Vue.http.get("https://urun-islemleri-egitim-default-rtdb.firebaseio.com/trade-result.json")
+        .then(response => {
+            console.log(response)
+            commit("updateTradeResult", response.body)
+        })
+}
