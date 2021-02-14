@@ -45,9 +45,32 @@ const actions = {
                 router.replace("/")
             })
     },
-    // sellProduct({ commit }, payload) {
-    //     //vue resource islemleri
-    // }
+    sellProduct({ state, commit }, payload) {
+        // pass by reference
+        // pass by value
+        let product = state.products.filter(element => {
+            return element.key == payload.key
+        })
+        if (product) {
+
+            //Z=X-Y
+            let totalCount = product[0].count - payload.count
+            Vue.http.patch("https://urun-islemleri-egitim-default-rtdb.firebaseio.com/products/" + payload.key + ".json", { count: totalCount })
+                .then(response => {
+                    product[0].count = totalCount
+                    let tradeResult = {
+                        purchase: 0,
+                        sale: product[0].price,
+                        count: payload.count,
+                    }
+                    dispatch("setTradeResult", tradeResult)
+                    router.replace("/")
+                    console.log(response)
+                })
+        }
+
+
+    }
 }
 
 export default {

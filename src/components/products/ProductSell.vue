@@ -12,7 +12,9 @@
               v-model="selectedProduct"
               @change="productSelected"
             >
+              <option selected disabled>Lütfen bir ürün seçiniz.</option>
               <option
+                :disabled="product.count == 0"
                 :value="product.key"
                 v-for="(product, index) in getProducts"
                 :key="index"
@@ -45,13 +47,14 @@
           <div class="form-group">
             <label>Adet</label>
             <input
+              v-model="product_count"
               type="text"
               class="form-control"
               placeholder="Ürün adetini giriniz.."
             />
           </div>
           <hr />
-          <button class="btn btn-primary">Kaydet</button>
+          <button @click="save" class="btn btn-primary">Kaydet</button>
         </div>
       </div>
     </div>
@@ -65,6 +68,7 @@ export default {
     return {
       selectedProduct: null,
       product: null,
+      product_count: null,
     };
   },
   computed: {
@@ -73,6 +77,13 @@ export default {
   methods: {
     productSelected() {
       this.product = this.$store.getters.getProduct(this.selectedProduct)[0];
+    },
+    save() {
+      let product = {
+        key: this.selectedProduct,
+        count: this.product_count,
+      };
+      this.$store.dispatch("sellProduct", product);
     },
   },
 };
