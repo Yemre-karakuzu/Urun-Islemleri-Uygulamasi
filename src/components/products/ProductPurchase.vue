@@ -43,7 +43,13 @@
             ></textarea>
           </div>
           <hr />
-          <button @click="saveProduct" class="btn btn-primary">Kaydet</button>
+          <button
+            @click="saveProduct"
+            :disabled="saveEnable"
+            class="btn btn-primary"
+          >
+            Kaydet
+          </button>
         </div>
       </div>
     </div>
@@ -54,6 +60,7 @@
 export default {
   data() {
     return {
+      isDisable: true,
       product: {
         title: "",
         count: null,
@@ -65,6 +72,18 @@ export default {
   methods: {
     saveProduct() {
       this.$store.dispatch("saveProduct", this.product);
+    },
+  },
+  computed: {
+    saveEnable() {
+      if (
+        this.product.title > 0 &&
+        this.product.count > 0 &&
+        this.product.price > 0 &&
+        this.product.description.length > 0
+      ) {
+        return false;
+      } else return true;
     },
   },
 };
