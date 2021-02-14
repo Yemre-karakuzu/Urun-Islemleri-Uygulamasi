@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <div class="loading" :style="isLoading">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-6 offset-3 pt-3 card mt-5 shadow">
         <div class="card-body">
@@ -54,7 +60,9 @@
             />
           </div>
           <hr />
-          <button @click="save" class="btn btn-primary">Kaydet</button>
+          <button :disabled="saveEnable" @click="save" class="btn btn-primary">
+            Kaydet
+          </button>
         </div>
       </div>
     </div>
@@ -69,22 +77,54 @@ export default {
       selectedProduct: null,
       product: null,
       product_count: null,
+      saveButtonClick: false,
     };
   },
   computed: {
     ...mapGetters(["getProducts"]),
+    saveEnable() {
+      if (this.selectedProduct !== null && this.product_count > 0) {
+        return false;
+      } else return true;
+    },
+    isLoading() {
+      if (this.saveButtonClick) {
+        return {
+          display: "block",
+        };
+      } else {
+        return {
+          display: "none",
+        };
+      }
+    },
   },
   methods: {
     productSelected() {
       this.product = this.$store.getters.getProduct(this.selectedProduct)[0];
     },
     save() {
+      this.saveButtonClick = true;
       let product = {
         key: this.selectedProduct,
         count: this.product_count,
       };
       this.$store.dispatch("sellProduct", product);
     },
+  },
+  beforeRouteLeave(to, from, next) {
+    if (
+      (this.selectedProduct !== null || this.product_count > 0) &&
+      !this.saveButtonClick
+    ) {
+      if (
+        confirm(
+          "Kaydedilmemiş değişiklikler var.Yine de çıkmak istiyor musunuz?"
+        )
+      ) {
+        next();
+      } else next(false);
+    } else next();
   },
 };
 </script>

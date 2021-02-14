@@ -45,7 +45,7 @@ const actions = {
                 router.replace("/")
             })
     },
-    sellProduct({ state, commit }, payload) {
+    sellProduct({ state, dispatch }, payload) {
         // pass by reference
         // pass by value
         let product = state.products.filter(element => {
